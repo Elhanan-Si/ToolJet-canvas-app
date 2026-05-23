@@ -17858,7 +17858,7 @@ section.ai-message-prompt-input-wrapper {
 
 /* Bulk RTL Support Overrides */
 [dir="rtl"] {
-  // Flip text alignment
+  // Flip text alignment safely for explicit classes
   .text-left {
     text-align: right !important;
   }
@@ -17866,7 +17866,7 @@ section.ai-message-prompt-input-wrapper {
     text-align: left !important;
   }
 
-  // Flip floats
+  // Flip floats safely
   .float-left {
     float: right !important;
   }
@@ -17874,22 +17874,20 @@ section.ai-message-prompt-input-wrapper {
     float: left !important;
   }
 
-  // Flip flex direction layout mirroring in bulk where needed
-  .flex-row {
-    flex-direction: row-reverse !important;
-  }
-  .flex-row-reverse {
-    flex-direction: row !important;
+  // Ensure left navigation sidebar stays anchored on the left and fully visible
+  .left-sidebar {
+    left: 0 !important;
+    right: auto !important;
+    margin: 0 !important;
+    transform: none !important;
+    border-right: 1px solid var(--border-weak) !important;
+    border-left: none !important;
   }
 
-  // Flip absolute positioning offsets in bulk
-  .left-0 {
+  .tj-leftsidebar-icon-wrap,
+  .tj-leftsidebar-icon-items-bottom {
     left: auto !important;
-    right: 0 !important;
-  }
-  .right-0 {
     right: auto !important;
-    left: 0 !important;
   }
 
   // Border radius adjustments
@@ -17904,15 +17902,5 @@ section.ai-message-prompt-input-wrapper {
     border-bottom-right-radius: 0.375rem !important;
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
-  }
-
-  // Flip padding/margin helper alignments
-  .ml-auto {
-    margin-right: auto !important;
-    margin-left: unset !important;
-  }
-  .mr-auto {
-    margin-left: auto !important;
-    margin-right: unset !important;
   }
 }
