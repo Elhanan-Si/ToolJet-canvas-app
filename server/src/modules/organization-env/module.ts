@@ -2,6 +2,7 @@ import { DynamicModule } from '@nestjs/common';
 import { SubModule } from '@modules/app/sub-module';
 import { OrganizationRepository } from '@modules/organizations/repository';
 import { OrganizationGitSyncRepository } from '@modules/git-sync/repository';
+import { GitSyncEnvUtilService as EEGitsyncService } from '@ee/organization-env/services/gitsync.util.service';
 
 export class OrganizationEnvModule extends SubModule {
   private static cachedModule: DynamicModule | null = null;
@@ -21,8 +22,18 @@ export class OrganizationEnvModule extends SubModule {
       module: OrganizationEnvModule,
       global: true,
       imports: [],
-      providers: [OrganizationEnvRegistryService, GitSyncEnvUtilService, OrganizationEnvUtilService, OrganizationRepository, OrganizationGitSyncRepository],
-      exports: [GitSyncEnvUtilService, OrganizationEnvUtilService],
+      providers: [
+        OrganizationEnvRegistryService,
+        GitSyncEnvUtilService,
+        {
+          provide: EEGitsyncService,
+          useExisting: GitSyncEnvUtilService,
+        },
+        OrganizationEnvUtilService,
+        OrganizationRepository,
+        OrganizationGitSyncRepository,
+      ],
+      exports: [GitSyncEnvUtilService, EEGitsyncService, OrganizationEnvUtilService],
     };
 
     return this.cachedModule;

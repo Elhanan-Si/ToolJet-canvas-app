@@ -17852,6 +17852,67 @@ section.ai-message-prompt-input-wrapper {
 
 .circular-progressbar-stroke-width {
   label {
-    width: 90px
+    width: 90px;
+  }
+}
+
+/* Bulk RTL Support Overrides */
+[dir="rtl"] {
+  // Flip text alignment
+  .text-left {
+    text-align: right !important;
+  }
+  .text-right {
+    text-align: left !important;
+  }
+
+  // Flip floats
+  .float-left {
+    float: right !important;
+  }
+  .float-right {
+    float: left !important;
+  }
+
+  // Flip flex direction layout mirroring in bulk where needed
+  .flex-row {
+    flex-direction: row-reverse !important;
+  }
+  .flex-row-reverse {
+    flex-direction: row !important;
+  }
+
+  // Flip absolute positioning offsets in bulk
+  .left-0 {
+    left: auto !important;
+    right: 0 !important;
+  }
+  .right-0 {
+    right: auto !important;
+    left: 0 !important;
+  }
+
+  // Border radius adjustments
+  .rounded-r-md {
+    border-top-left-radius: 0.375rem !important;
+    border-bottom-left-radius: 0.375rem !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  .rounded-l-md {
+    border-top-right-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+  }
+
+  // Flip padding/margin helper alignments
+  .ml-auto {
+    margin-right: auto !important;
+    margin-left: unset !important;
+  }
+  .mr-auto {
+    margin-left: auto !important;
+    margin-right: unset !important;
   }
 }

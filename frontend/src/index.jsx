@@ -46,6 +46,13 @@ appService
         },
       });
 
+    const handleDirChange = (lng) => {
+      const isRtl = ['he', 'ar', 'fa', 'ur', 'yi', 'syr'].includes(lng);
+      document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    };
+    i18n.on('languageChanged', handleDirChange);
+    handleDirChange(language);
+
     if (window.public_config.APM_VENDOR === 'sentry') {
       const tooljetServerUrl = window.public_config.TOOLJET_SERVER_URL;
       const tracingOrigins = ['localhost', /^\//];
