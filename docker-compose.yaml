@@ -52,8 +52,11 @@ services:
       - 3000:3000
     working_dir: /app/server
     entrypoint: /app/server/dev-entrypoint.sh
+    env_file:
+      - .env
     environment:
       - SERVE_CLIENT=false
+
       - FORCE_COLOR=1
       - TOOLJET_EDITION=${TOOLJET_EDITION:-ce}
       - REDIS_HOST=redis
