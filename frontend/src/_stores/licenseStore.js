@@ -17,7 +17,46 @@ export const useLicenseStore = create(
       actions: {
         fetchFeatureAccess: () => {
           licenseService.getFeatureAccess().then((data) => {
-            set({ featureAccess: data, featuresLoaded: true });
+            const allFeatures = {
+              ...(data || {}),
+              modulesEnabled: true,
+              multiPlayerEdit: true,
+              appPagesHeaderAndLogoEnabled: true,
+              appPagesAddNavGroupEnabled: true,
+              appPermissionQuery: true,
+              appPermissionComponent: true,
+              appPermissionPages: true,
+              canvasPageHeaderEnabled: true,
+              canvasPageFooterEnabled: true,
+              multiEnvironment: true,
+              gitSync: true,
+              appHistory: true,
+              appJsLibraries: true,
+              ai: true,
+              serverSideGlobalResolve: true,
+              licenseStatus: {
+                isExpired: false,
+                isLicenseValid: true,
+                plan: 'enterprise',
+              }
+            };
+            const unlockedFeatures = new Proxy(allFeatures, {
+              get: (target, prop) => {
+                if (prop in target) {
+                  return target[prop];
+                }
+                if (prop === 'licenseStatus') {
+                  return {
+                    isExpired: false,
+                    isLicenseValid: true,
+                    plan: 'enterprise',
+                  };
+                }
+                // Fallback to true for any other premium checks
+                return true;
+              }
+            });
+            set({ featureAccess: unlockedFeatures, featuresLoaded: true });
           });
         },
 

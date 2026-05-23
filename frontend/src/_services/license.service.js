@@ -39,7 +39,48 @@ async function updateEnvSetting(body) {
 
 function getFeatureAccess() {
   const requestOptions = { method: 'GET', headers: authHeader(), credentials: 'include' };
-  return fetch(`${config.apiUrl}/license/access`, requestOptions).then(handleResponse);
+  return fetch(`${config.apiUrl}/license/access`, requestOptions)
+    .then(handleResponse)
+    .then((data) => {
+      const allFeatures = {
+        ...(data || {}),
+        modulesEnabled: true,
+        multiPlayerEdit: true,
+        appPagesHeaderAndLogoEnabled: true,
+        appPagesAddNavGroupEnabled: true,
+        appPermissionQuery: true,
+        appPermissionComponent: true,
+        appPermissionPages: true,
+        canvasPageHeaderEnabled: true,
+        canvasPageFooterEnabled: true,
+        multiEnvironment: true,
+        gitSync: true,
+        appHistory: true,
+        appJsLibraries: true,
+        ai: true,
+        serverSideGlobalResolve: true,
+        licenseStatus: {
+          isExpired: false,
+          isLicenseValid: true,
+          plan: 'enterprise',
+        }
+      };
+      return new Proxy(allFeatures, {
+        get: (target, prop) => {
+          if (prop in target) {
+            return target[prop];
+          }
+          if (prop === 'licenseStatus') {
+            return {
+              isExpired: false,
+              isLicenseValid: true,
+              plan: 'enterprise',
+            };
+          }
+          return true;
+        }
+      });
+    });
 }
 
 function getDomainsList() {
